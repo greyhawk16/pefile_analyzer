@@ -72,7 +72,7 @@ def get_iat_eat(file_path):
 
 
 # 출처: https://github.com/ralphje/signify/blob/master/examples/authenticode_info.py
-def get_certification_info_R1(file_path):
+def get_certification_info_detailed_version(file_path):
 
     with open(file_path, "rb") as file_obj:
         try:
@@ -140,7 +140,7 @@ def get_certification_info_R1(file_path):
 
 
 # https://lief.re/doc/latest/tutorials/13_pe_authenticode.html
-def get_certification_info_R3(file_path):
+def get_certification_info(file_path):
     ans = {
         'number of certificates': 0,
         'serial numbers': [],
@@ -158,6 +158,6 @@ def get_certification_info_R3(file_path):
 
     return ans
 
-path = "uploads/pplot.exe"
-print(get_certification_info_R1(path))
+path = "./xfoil.exe"
+print(get_certification_info(path))
 
