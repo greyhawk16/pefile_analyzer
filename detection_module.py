@@ -60,15 +60,22 @@ def get_iat_eat(file_path):
             dll_info = {
                 'DLL': file.dll.decode(),
                 'Functions': [
-                    {"Function": function.name.decode() if function.name else f"ordinal {function.ordinal}"}
+                    function.name.decode() if function.name else f"ordinal {function.ordinal}"
                     for function in file.imports
                 ]
             }
             import_info.append(dll_info)
 
     if hasattr(pe, 'DIRECTORY_ENTRY_EXPORT'):
-        # 추후 추가 예정
-        print("export")
+        exports = [(e.ordinal, e.name) for e in pe.DIRECTORY_ENTRY_EXPORT.symbols]
+        for export in sorted(exports):
+            export_info.append(export)
+
+    ans = {
+        'IAT':import_info,
+        'EAT':export_info
+    }
+    return ans
 
 
 # 출처: https://github.com/ralphje/signify/blob/master/examples/authenticode_info.py
