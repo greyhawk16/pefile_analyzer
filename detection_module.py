@@ -9,27 +9,6 @@ from dotenv import load_dotenv
 from signify.authenticode import SignedPEFile
 
 
-load_dotenv()
-
-
-def check_entropy(file_path):
-    with open(file_path, 'rb') as file:
-        data = file.read()
-
-    byte_cnt = collections.Counter(data)
-    file_length = len(data)
-
-    entropy = 0
-
-    for cnt in byte_cnt.values():
-        p = cnt / file_length
-
-        if p > 0:
-            entropy -= p * math.log2(p)
-
-    return entropy
-
-
 def get_rich_header(file_path):
     try:
         pe = pefile.PE(file_path)
